@@ -1,0 +1,65 @@
+syntax = "proto3";
+
+package com.powerspace.test.bidder;
+
+// Service de bidding pour sélectionner les meilleures publicités
+service BidderService {
+  // Demande de bid pour une position donnée
+  rpc GetBid(BidRequest) returns (BidResponse);
+  
+  // Facturer un AdGroup après affichage
+  rpc BillAdGroup(BillRequest) returns (BillResponse);
+}
+
+// Requête de bid
+message BidRequest {
+  string position_code = 1;
+  string country_code = 2;
+  // L'AdServer envoie tous les AdGroups éligibles
+  repeated AdGroupData available_adgroups = 3;
+}
+
+// Données d'un AdGroup pour le bidding
+message AdGroupData {
+  int32 id = 1;
+  string name = 2;
+  string description = 3;
+  string image = 4;
+  string country_code = 5;
+  double cost = 6;
+  string cost_type = 7;
+  double budget = 8;
+  bool is_active = 9;
+}
+
+// Réponse de bid
+message BidResponse {
+  bool success = 1;
+  string error_message = 2;
+  AdGroupBid winning_bid = 3;
+}
+
+// Information sur un AdGroup sélectionné
+message AdGroupBid {
+  int32 id = 1;
+  string name = 2;
+  string description = 3;
+  string image = 4;
+  string country_code = 5;
+  double cost = 6;
+  string cost_type = 7;
+  double remaining_budget = 8;
+}
+
+// Requête de facturation
+message BillRequest {
+  int32 adgroup_id = 1;
+  double amount = 2;
+}
+
+// Réponse de facturation
+message BillResponse {
+  bool success = 1;
+  string error_message = 2;
+  double remaining_budget = 3;
+}
