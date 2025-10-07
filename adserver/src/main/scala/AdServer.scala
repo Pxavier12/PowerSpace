@@ -29,7 +29,7 @@ object AdServer extends IOApp {
 
     // Logger avec configuration optimisée
     val finalHttpApp = Logger.httpApp(
-      logHeaders = false, // Réduire le logging pour les performances
+      logHeaders = false,
       logBody = false
     )(httpApp)
 

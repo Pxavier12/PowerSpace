@@ -184,7 +184,7 @@ object AdGroupRepository {
   def getAdGroups: Future[Seq[AdGroup]] = networkCall(adGroups)
 
   /**
-   * Facturation optimisée avec mise à jour atomique
+   * Facturation optimisée avec mise à jour
    */
   def billAdGroup(adGroup: AdGroup): Future[Unit] = {
     val currentBudget = budgets.get(adGroup.id)

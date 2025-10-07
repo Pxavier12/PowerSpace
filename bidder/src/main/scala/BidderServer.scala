@@ -8,6 +8,7 @@ import scala.util.{Failure, Success}
 
 object BidderServer extends App {
 
+  //Gestionnaire par defaut des pools et threads
   implicit val ec: ExecutionContext = ExecutionContext.global
 
   def createServer(): Server = {
@@ -23,12 +24,10 @@ object BidderServer extends App {
   val server = createServer()
   println(s"Serveur Bidder démarré sur le port ${server.getPort}")
 
-  // Ajouter un hook pour arrêter proprement le serveur
   sys.addShutdownHook {
     println("Arrêt du serveur Bidder...")
     server.shutdown()
   }
 
-  // Attendre que le serveur soit arrêté
   server.awaitTermination()
 }
